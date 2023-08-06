@@ -1,8 +1,0 @@
-[alias]
-	hist = log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(normal)%s %C(dim cyan){{%an}}%C(reset) %C(magenta)%d%C(reset)' --graph --date=short
-	st = status
-	ch = checkout
-[core]
-	editor = nvim
-[merge]
-	tool = meld
