@@ -1,0 +1,28 @@
+format = '$directory$git_branch$python$character'
+add_newline = false
+
+[directory]
+style = 'bold blue'
+
+[character]
+success_symbol = '[❯](bold cyan)'
+error_symbol = '[❯](bold cyan)'
+vimcmd_visual_symbol = '[❯](bold cyan)'
+vimcmd_symbol = '[❮](bold purple)'
+vimcmd_replace_symbol = '[❮](bold purple)'
+vimcmd_replace_one_symbol = '[❮](bold purple)'
+
+[python]
+format = '[${pyenv_prefix}(\($virtualenv\) )]($style)'
+
+[git_branch]
+style = 'purple'
+format = '\([$branch(:$remote_branch)]($style)\) '
+
+[line_break]
+disabled = true
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
