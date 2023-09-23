@@ -21,5 +21,5 @@ import:
   - ~/.config/alacritty/themes/themes/smoooooth.yaml
   #- ~/.config/alacritty/themes/themes/xterm.yaml
 
-#shell:
-#  program: /usr/bin/fish
+shell:
+  program: /usr/bin/zsh
