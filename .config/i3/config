@@ -251,4 +251,4 @@ exec element-desktop
 exec --no-startup-id $HOME/.config/i3/screenlayout.sh
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id nitrogen --restore
-
+exec --no-startup-id picom -b
