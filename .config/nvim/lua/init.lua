@@ -54,4 +54,11 @@ require("lazy").setup({
 
     -- File explorer
     'nvim-tree/nvim-tree.lua',
+
+    -- Hop
+    {
+        'smoka7/hop.nvim',
+        version = "v2.5.0",
+        opts = {},
+    }
 })
