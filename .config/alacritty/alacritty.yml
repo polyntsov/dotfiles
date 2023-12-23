@@ -18,7 +18,8 @@ selection:
 
 import:
   #- ~/.config/alacritty/themes/themes/blood_moon.yaml
-  - ~/.config/alacritty/themes/themes/smoooooth.yaml
+  #- ~/.config/alacritty/themes/themes/smoooooth.yaml
+  - ~/.config/alacritty/themes/themes/carbonfox.yaml
   #- ~/.config/alacritty/themes/themes/xterm.yaml
 
 shell:
