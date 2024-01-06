@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 function current_task () {
-    task=$(toggl ls --today -f 'project, description, stop' 2>/dev/null)
+    task=$(toggl ls -f 'project, description, stop' 2>/dev/null)
     ret_code=$?
 
     if [ $ret_code -ne 0 ]; then
