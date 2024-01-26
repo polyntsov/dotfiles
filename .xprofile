@@ -1,0 +1,7 @@
+light-locker &
+
+# Setup displays
+$HOME/.config/i3/screenlayout.sh
+
+# Run compositor
+picom -b
