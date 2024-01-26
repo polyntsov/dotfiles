@@ -1,0 +1,13 @@
+#!/bin/sh
+
+num_monitors=$(xrandr --listmonitors | grep "Monitors:" | awk '{print $2}')
+
+WALL1="$HOME/pictures/wall/wall5.jpg"
+WALL2="$HOME/pictures/wall/wallpapersden.com_just-a-tree_2560x1600.jpg"
+
+if [ "$num_monitors" -eq 2 ]; then
+    feh --no-fehbg --bg-center $WALL1 $WALL2
+else
+    feh --no-fehbg --bg-center $WALL2
+fi
+
