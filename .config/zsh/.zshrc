@@ -28,6 +28,7 @@ zstyle ':completion:*' list-suffixes zstyle ':completion:*' expand prefix suff
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
+zstyle ':completion:*' rehash true
 
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
