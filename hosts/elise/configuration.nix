@@ -9,6 +9,7 @@
     [
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
+      ../../modules/de/gnome.nix
     ];
 
   # Bootloader.
@@ -38,18 +39,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Disable the X11 windowing system.
-  services.xserver.enable = false;
 
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11 (and for GNOME)
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -133,4 +123,5 @@
 
   # Nixos
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 }
