@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
       ../../modules/de/cosmic.nix
+      inputs.home-manager.nixosModules.default
     ];
 
   # Bootloader.
@@ -65,12 +66,13 @@
     isNormalUser = true;
     description = "arno";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      alacritty
-      fastfetch
-      telegram-desktop
-      gemini-cli
-    ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "arno" = import ./home.nix;
+    };
   };
 
   # Install firefox.
