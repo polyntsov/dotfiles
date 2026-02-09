@@ -9,7 +9,7 @@
     [
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
-      ../../modules/de/gnome.nix
+      ../../modules/de/cosmic.nix
     ];
 
   # Bootloader.
