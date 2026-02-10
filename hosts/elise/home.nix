@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports =
+    [
+      ../../modules/home-manager/alacritty.nix
+    ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "arno";
@@ -17,7 +21,6 @@
 
   # Aditional packages
   home.packages = with pkgs; [
-    alacritty
     fastfetch
     telegram-desktop
     gemini-cli
@@ -67,7 +70,7 @@
   #  /etc/profiles/per-user/arno/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
