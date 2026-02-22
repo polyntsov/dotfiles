@@ -6,6 +6,7 @@
       ../../modules/home-manager/alacritty.nix
       ../../modules/home-manager/starship.nix
       ../../modules/home-manager/zsh.nix
+      ../../modules/home-manager/tmux.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
