@@ -62,10 +62,12 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.zsh.enable = true;
   users.users.arno = {
     isNormalUser = true;
     description = "arno";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh; # configured in home-manager
   };
 
   home-manager = {
