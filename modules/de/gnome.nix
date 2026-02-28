@@ -28,4 +28,13 @@
       });
     })
   ];
+
+  environment.systemPackages = with pkgs; [
+    gnome-tweaks
+    gnomeExtensions.appindicator
+  ];
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    gnome-user-docs
+  ];
 }
