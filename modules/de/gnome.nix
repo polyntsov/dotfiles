@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Enable the GNOME Desktop Environment.
@@ -36,16 +36,91 @@
     wl-clipboard
   ];
   environment.gnome.excludePackages = with pkgs; [
+    gnome-contacts
+    gnome-initial-setup
     gnome-tour
     gnome-user-docs
+    epiphany # web browser
+    yelp # Help view
   ];
 
+  programs.dconf.enable = true;
   home-manager.sharedModules = [
     {
       dconf.settings = {
+        "org/gnome/mutter" = {
+	  dynamic-workspaces = false;
+        };
+
+        "org/gnome/desktop/wm/preferences" = {
+          num-workspaces = 4;
+        };
+
+        "org/gnome/shell/keybindings" = {
+          switch-to-application-1 = [ ];
+          switch-to-application-2 = [ ];
+          switch-to-application-3 = [ ];
+          switch-to-application-4 = [ ];
+        };
+
+        "org/gnome/desktop/wm/keybindings" = {
+          switch-to-workspace-1 = [ "<Super>1" ];
+          switch-to-workspace-2 = [ "<Super>2" ];
+          switch-to-workspace-3 = [ "<Super>3" ];
+          switch-to-workspace-4 = [ "<Super>4" ];
+
+          move-to-workspace-1 = [ "<Super><Shift>1" ];
+          move-to-workspace-2 = [ "<Super><Shift>2" ];
+          move-to-workspace-3 = [ "<Super><Shift>3" ];
+          move-to-workspace-4 = [ "<Super><Shift>4" ];
+
+          switch-applications = [ ];
+          switch-applications-backward = [ ];
+          switch-windows = [ "<Alt>Tab" ];
+          close = [ "<Super>q" ];
+        };
+
+        "org/gnome/desktop/input-sources" = {
+          xkb-options = [ "grp:alt_shift_toggle" ];
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          ];
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+          binding = "<Super>Return";
+          command = "alacritty";
+          name = "Alacritty";
+        };
+
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
+          accent-color = "teal";
         };
+
+        "org/gnome/desktop/background" = {
+          picture-uri = "file://${../../media/pic/wall/fuji.jpeg}";
+          picture-uri-dark = "file://${../../media/pic/wall/fuji.jpeg}";
+          primary-color = "#000000";
+          secondary-color = "#000000";
+        };
+
+        "org/gnome/desktop/screensaver" = {
+          picture-uri = "file://${../../media/pic/wall/fuji.jpeg}";
+          primary-color = "#000000";
+          secondary-color = "#000000";
+        };
+
+	"org/gnome/shell" = {
+	  disable-user-extensions = false;
+
+	  enabled-extensions = [
+	    "appindicatorsupport@rgcjonas.gmail.com"
+	  ];
+	};
       };
     }
   ];
