@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, userSettings, ... }:
 
 {
   programs.git = {
@@ -8,8 +8,8 @@
 
     settings = {
       user = {
-        name = "Michael Polyntsov";
-        email = "Arno9148@gmail.com";
+        name = userSettings.name;
+        email = userSettings.email;
       };
 
       alias = {
@@ -20,7 +20,7 @@
       };
 
       core = {
-        excludesFile = "/home/arno/.gitignore";
+        excludesFile = "/home/${userSettings.username}/.gitignore";
         editor = "nvim";
       };
 

@@ -14,11 +14,19 @@
   outputs = { self, nixpkgs, nixos-hardware, ... }@inputs:
   let
     system = "x86_64-linux";
+    userSettings = {
+      username = "arno";
+      name = "Michael Polyntsov";
+      email = "Arno9148@gmail.com";
+    };
   in {
     nixosConfigurations = {
       elise = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs;
+            inherit userSettings;
+          };
 
           modules = [
             ./hosts/elise/configuration.nix

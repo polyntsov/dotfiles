@@ -1,12 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, userSettings, ... }:
 
 {
   programs.jujutsu = {
     enable = true;
     settings = {
       user = {
-        name = "Michael Polyntsov";
-        email = "arno9148@gmail.com";
+        name = userSettings.name;
+        email = userSettings.email;
       };
       ui = {
         editor = "nvim";

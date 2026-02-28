@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, userSettings, ... }:
 
 {
   imports =
@@ -64,9 +64,9 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh.enable = true;
-  users.users.arno = {
+  users.users.${userSettings.username} = {
     isNormalUser = true;
-    description = "arno";
+    description = userSettings.username;
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh; # configured in home-manager
   };
@@ -74,9 +74,12 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+      inherit userSettings;
+    };
     users = {
-      "arno" = import ./home.nix;
+      "${userSettings.username}" = import ./home.nix;
     };
   };
 
