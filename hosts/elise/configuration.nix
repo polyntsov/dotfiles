@@ -101,6 +101,8 @@
     silver-searcher
     ripgrep
     python3
+    killall
+    htop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
