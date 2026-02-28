@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, userSettings, ... }:
+{ config, pkgs, inputs, pkgs-unstable, userSettings, ... }:
 
 {
   imports =
@@ -69,6 +69,8 @@
     description = userSettings.username;
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh; # configured in home-manager
+    packages = with pkgs; [
+    ];
   };
 
   home-manager = {
@@ -76,6 +78,7 @@
     useUserPackages = true;
     extraSpecialArgs = {
       inherit inputs;
+      inherit pkgs-unstable;
       inherit userSettings;
     };
     users = {
