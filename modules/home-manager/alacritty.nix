@@ -27,12 +27,16 @@
 
       padding = {
         x = 5;
-	y = 5;
+        y = 5;
       };
     };
 
     font = {
-      size = 10;
+      normal = {
+        family = "Pixel Code";
+        style = "Regular";
+      };
+      size = 12;
     };
   };
 }
