@@ -9,7 +9,8 @@
     [
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
-      ../../modules/de/cosmic.nix
+      #../../modules/de/cosmic.nix
+      ../../modules/de/gnome.nix
       inputs.home-manager.nixosModules.default
     ];
 
