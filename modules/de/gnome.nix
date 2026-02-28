@@ -32,6 +32,7 @@
   environment.systemPackages = with pkgs; [
     gnome-tweaks
     gnomeExtensions.appindicator
+    wl-clipboard
   ];
   environment.gnome.excludePackages = with pkgs; [
     gnome-tour

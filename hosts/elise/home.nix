@@ -7,6 +7,8 @@
       ../../modules/home-manager/starship.nix
       ../../modules/home-manager/zsh.nix
       ../../modules/home-manager/tmux.nix
+      ../../modules/home-manager/git.nix
+      ../../modules/home-manager/jj.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -27,6 +29,8 @@
     fastfetch
     telegram-desktop
     gemini-cli
+    pixel-code
+    discord
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of

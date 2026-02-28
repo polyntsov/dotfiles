@@ -72,6 +72,8 @@
   };
 
   home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
     users = {
       "arno" = import ./home.nix;
@@ -92,6 +94,7 @@
     neovim
     git
     tmux
+    tree
     silver-searcher
     ripgrep
     python3
