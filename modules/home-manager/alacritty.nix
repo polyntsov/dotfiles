@@ -3,6 +3,8 @@
 {
   programs.alacritty.enable = true;
 
+  programs.alacritty.theme = "papercolor_dark";
+
   programs.alacritty.settings = {
     colors = {
       draw_bold_text_with_bright_colors = true;
@@ -18,7 +20,7 @@
     };
 
     window = {
-      opacity = 0.96;
+      opacity = 1;
 
       class = {
         general = "Alacritty";
