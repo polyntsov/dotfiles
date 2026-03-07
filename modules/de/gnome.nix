@@ -47,7 +47,9 @@
   programs.dconf.enable = true;
   home-manager.sharedModules = [
     {
-      dconf.settings = {
+      dconf.settings = let
+        wallpaper = "file://${../../media/pic/wall/nature.png}";
+      in {
         "org/gnome/mutter" = {
 	  dynamic-workspaces = false;
         };
@@ -102,14 +104,14 @@
         };
 
         "org/gnome/desktop/background" = {
-          picture-uri = "file://${../../media/pic/wall/fuji.jpeg}";
-          picture-uri-dark = "file://${../../media/pic/wall/fuji.jpeg}";
+          picture-uri = wallpaper;
+          picture-uri-dark = wallpaper;
           primary-color = "#000000";
           secondary-color = "#000000";
         };
 
         "org/gnome/desktop/screensaver" = {
-          picture-uri = "file://${../../media/pic/wall/fuji.jpeg}";
+          picture-uri = wallpaper;
           primary-color = "#000000";
           secondary-color = "#000000";
         };
