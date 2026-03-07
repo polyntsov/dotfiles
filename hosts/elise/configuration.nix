@@ -89,9 +89,10 @@
   # Install firefox.
   programs.firefox.enable = true;
 
-  # Default editor
-  programs.neovim.enable = true;
-  programs.neovim.defaultEditor = true;
+  # Steam
+  programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+  programs.gamemode.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
