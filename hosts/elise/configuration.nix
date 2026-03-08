@@ -139,7 +139,7 @@
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
-  boot.loader.systemd-boot.configurationLimit = 2;
+  boot.loader.systemd-boot.configurationLimit = 3;
 
   # Nixos
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
