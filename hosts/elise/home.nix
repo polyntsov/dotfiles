@@ -10,6 +10,7 @@
       ../../modules/home-manager/git.nix
       ../../modules/home-manager/jj.nix
       ../../modules/home-manager/neovim/default.nix
+      ../../modules/home-manager/fastfetch.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

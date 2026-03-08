@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, self, ... }:
 
 {
   programs.zsh = {
@@ -83,6 +83,11 @@
       export IGNORE_DIRS='--ignore-dir .local --ignore-dir .git --ignore-dir .mozilla --ignore-dir .thunderbird --ignore-dir .dotfiles --ignore-dir .cache'
       export FZF_CTRL_T_COMMAND="ag --hidden $IGNORE_DIRS -g """
       export FZF_ALT_C_COMMAND="ag --hidden $IGNORE_DIRS -g """
+
+      # Run animation then fastfetch on terminal open (not in tmux or subshells)
+      if [[ -z "$TMUX" && "$SHLVL" -eq 1 ]]; then
+        python ${self}/media/animations/flakes.py --transition 1 && fastfetch
+      fi
     '';
   };
 

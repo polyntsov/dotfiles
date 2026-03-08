@@ -13,6 +13,8 @@
     killall
     htop
     fastfetch
+    mpv
+    ffmpeg
     gcc
     clang
     uv

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, pkgs-unstable, userSettings, ... }:
+{ config, pkgs, inputs, pkgs-unstable, userSettings, self, ... }:
 
 {
   imports =
@@ -12,6 +12,7 @@
       ../../modules/common/pipewire.nix
       ../../modules/common/packages.nix
       ../../modules/common/font.nix
+      ../../modules/common/lib.nix
       #../../modules/de/cosmic.nix
       ../../modules/de/gnome.nix
       ../../modules/common/games.nix
@@ -66,6 +67,7 @@
     useUserPackages = true;
     extraSpecialArgs = {
       inherit inputs;
+      inherit self;
       inherit pkgs-unstable;
       inherit userSettings;
     };
