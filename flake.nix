@@ -30,6 +30,7 @@
           inherit system;
           specialArgs = {
             inherit inputs;
+            inherit self;
             inherit pkgs-unstable;
             inherit userSettings;
           };
