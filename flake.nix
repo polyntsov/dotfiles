@@ -22,7 +22,7 @@
     userSettings = {
       username = "arno";
       name = "Michael Polyntsov";
-      email = "Arno9148@gmail.com";
+      email = "arno9148@gmail.com";
     };
   in {
     nixosConfigurations = {
