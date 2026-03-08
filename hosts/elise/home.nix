@@ -29,7 +29,6 @@
   home.packages = with pkgs; [
     telegram-desktop
     gemini-cli
-    pixel-code
     discord
     zoom-us
     # # It is sometimes useful to fine-tune packages, for example, by applying

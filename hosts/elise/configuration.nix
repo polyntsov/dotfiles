@@ -11,6 +11,7 @@
       inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
       ../../modules/common/pipewire.nix
       ../../modules/common/packages.nix
+      ../../modules/common/font.nix
       #../../modules/de/cosmic.nix
       ../../modules/de/gnome.nix
       ../../modules/common/games.nix
