@@ -23,9 +23,14 @@
       opacity = 1;
       decorations = "None";
 
+      dimensions = {
+        columns = 110;
+        lines = 32;
+      };
+
       class = {
         general = "Alacritty";
-	instance = "Alacritty";
+        instance = "Alacritty";
       };
 
       padding = {
