@@ -9,6 +9,7 @@
       ../../modules/home-manager/tmux.nix
       ../../modules/home-manager/git.nix
       ../../modules/home-manager/jj.nix
+      ../../modules/home-manager/neovim/default.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -84,10 +85,5 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
 }
 
