@@ -18,5 +18,8 @@
     gcc
     clang
     uv
+    cmake
+    ninja
+    boost.dev
   ];
 }
