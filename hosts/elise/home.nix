@@ -27,13 +27,11 @@
 
   # Aditional packages
   home.packages = with pkgs; [
-    fastfetch
     telegram-desktop
     gemini-cli
     pixel-code
     discord
     zoom-us
-    mangohud
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
