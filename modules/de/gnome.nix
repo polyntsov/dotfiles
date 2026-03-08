@@ -112,6 +112,9 @@
         "org/gnome/settings-daemon/plugins/media-keys" = {
           custom-keybindings = [
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
           ];
         };
 
@@ -119,6 +122,24 @@
           binding = "<Super>Return";
           command = "alacritty";
           name = "Alacritty";
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+          binding = "<Super>t";
+          command = "Telegram";
+          name = "Telegram";
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+          binding = "<Super>d";
+          command = "discord";
+          name = "Discord";
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+          binding = "<Super>f";
+          command = "firefox";
+          name = "Firefox";
         };
 
         "org/gnome/desktop/interface" = {
