@@ -19,11 +19,6 @@
       inherit system;
       config.allowUnfree = true;
     };
-    userSettings = {
-      username = "arno";
-      name = "Michael Polyntsov";
-      email = "arno9148@gmail.com";
-    };
   in {
     nixosConfigurations = {
       elise = nixpkgs.lib.nixosSystem {
@@ -32,7 +27,6 @@
             inherit inputs;
             inherit self;
             inherit pkgs-unstable;
-            inherit userSettings;
           };
 
           modules = [

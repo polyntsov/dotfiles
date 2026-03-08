@@ -2,9 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, pkgs-unstable, userSettings, self, ... }:
+{ config, pkgs, inputs, pkgs-unstable, self, ... }:
 
+let
+  userSettings = {
+    username = "arno";
+    name = "Michael Polyntsov";
+    email = "arno9148@gmail.com";
+  };
+in
 {
+  _module.args.userSettings = userSettings;
+
   imports =
     [
       ./hardware-configuration.nix
