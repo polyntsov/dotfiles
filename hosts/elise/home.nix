@@ -28,7 +28,17 @@
 
   # Aditional packages
   home.packages = with pkgs; [
-    telegram-desktop
+    (telegram-desktop.overrideAttrs (oldAttrs: {
+      unwrapped = oldAttrs.unwrapped.overrideAttrs (oldUnwrapped: {
+        patches = (oldUnwrapped.patches or []) ++ [
+          (fetchpatch {
+            # https://github.com/nixos/nixpkgs/issues/497549
+            url = "https://gist.github.com/half-duplex/d95e4fda535fb72ad0246ccfbe55cb23/raw/410dc924a317d391226c338ab75fcd1a9aaaf91b/tdesktop-minizip-include.patch";
+            hash = "sha256-lvEE5ZGmOjulZCg/rgrvAOTjUpJsAOcga+sAzr8FtYA=";
+          })
+        ];
+      });
+    }))
     gemini-cli
     discord
     zoom-us
