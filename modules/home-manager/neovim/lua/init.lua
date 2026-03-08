@@ -36,18 +36,15 @@ require("lazy").setup({
     'Mofiqul/vscode.nvim',
     'martinsione/darkplus.nvim',
     'folke/tokyonight.nvim',
+    'EdenEast/nightfox.nvim',
     {
-        'EdenEast/nightfox.nvim',
+        'NLKNguyen/papercolor-theme',
         lazy = false,
         priority = 1000,
         config = function()
-          require('nightfox').setup({
-              options = {
-                  transparent = false,
-              }
-          })
-
-          vim.cmd.colorscheme('carbonfox')
+          vim.opt.termguicolors = true
+          vim.opt.background = "dark"
+          vim.cmd.colorscheme('PaperColor')
           vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg='None' })
         end
     },
@@ -70,3 +67,4 @@ require("lazy").setup({
         opts = {},
     }
 })
+
