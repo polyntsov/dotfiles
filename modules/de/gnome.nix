@@ -149,7 +149,7 @@
 
         "org/gnome/shell/extensions/p7-borders" = {
           default-enabled = true;
-          default-active-color = "rgba(33, 144, 164, 0.8)";
+          default-active-color = "rgba(182, 184, 187, 0.8)";
         };
       };
     }
