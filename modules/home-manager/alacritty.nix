@@ -21,6 +21,7 @@
 
     window = {
       opacity = 1;
+      decorations = "None";
 
       class = {
         general = "Alacritty";
