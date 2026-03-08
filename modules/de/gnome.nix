@@ -33,6 +33,7 @@
   environment.systemPackages = with pkgs; [
     gnome-tweaks
     gnomeExtensions.appindicator
+    gnomeExtensions.dash-to-panel
     (stdenv.mkDerivation rec {
       pname = "gnome-shell-extension-p7-borders";
       version = "758e78bac33b5bb3e60366f6de4b337eeffc2f98";
@@ -144,7 +145,14 @@
           enabled-extensions = [
             "appindicatorsupport@rgcjonas.gmail.com"
             "p7-borders@prasannavl.com"
+            "dash-to-panel@jderose9.github.com"
           ];
+        };
+
+        "org/gnome/shell/extensions/dash-to-panel" = {
+          panel-position = "BOTTOM";
+          panel-lengths = "{\"0\":100}";
+          panel-sizes = "{\"0\":40}";
         };
 
         "org/gnome/shell/extensions/p7-borders" = {
