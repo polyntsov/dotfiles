@@ -33,6 +33,28 @@
   environment.systemPackages = with pkgs; [
     gnome-tweaks
     gnomeExtensions.appindicator
+    (stdenv.mkDerivation rec {
+      pname = "gnome-shell-extension-p7-borders";
+      version = "758e78bac33b5bb3e60366f6de4b337eeffc2f98";
+
+      src = fetchFromGitHub {
+        owner = "prasannavl";
+        repo = "p7-borders-shell-extension";
+        rev = version;
+        sha256 = "0k0yjzspvrb333fffblwr66xb7kkqqmvjjzh9znzrzhlivl4br78";
+      };
+
+      nativeBuildInputs = [ glib ];
+
+      buildPhase = ''
+        glib-compile-schemas schemas
+      '';
+
+      installPhase = ''
+        mkdir -p $out/share/gnome-shell/extensions/p7-borders@prasannavl.com
+        cp -r * $out/share/gnome-shell/extensions/p7-borders@prasannavl.com
+      '';
+    })
     wl-clipboard
   ];
   environment.gnome.excludePackages = with pkgs; [
@@ -51,7 +73,7 @@
         wallpaper = "file://${../../media/pic/wall/nature.png}";
       in {
         "org/gnome/mutter" = {
-	  dynamic-workspaces = false;
+          dynamic-workspaces = false;
         };
 
         "org/gnome/desktop/wm/preferences" = {
@@ -116,13 +138,19 @@
           secondary-color = "#000000";
         };
 
-	"org/gnome/shell" = {
-	  disable-user-extensions = false;
+        "org/gnome/shell" = {
+          disable-user-extensions = false;
 
-	  enabled-extensions = [
-	    "appindicatorsupport@rgcjonas.gmail.com"
-	  ];
-	};
+          enabled-extensions = [
+            "appindicatorsupport@rgcjonas.gmail.com"
+            "p7-borders@prasannavl.com"
+          ];
+        };
+
+        "org/gnome/shell/extensions/p7-borders" = {
+          default-enabled = true;
+          default-active-color = "rgba(33, 144, 164, 0.8)";
+        };
       };
     }
   ];
