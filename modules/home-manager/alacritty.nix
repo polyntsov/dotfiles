@@ -44,7 +44,7 @@
         family = "Pixel Code";
         style = "Regular";
       };
-      size = 12;
+      size = 10;
     };
   };
 }
