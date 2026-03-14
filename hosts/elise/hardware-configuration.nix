@@ -26,7 +26,14 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  swapDevices = [ ];
+  fileSystems."/home/arno/games" =
+    { device = "/dev/disk/by-uuid/c81c7f3e-5d68-46f6-9f1f-b4e001f663a3";
+      fsType = "ext4";
+    };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/5a756235-4820-4a9c-bc9a-48c6860df52e"; }
+    ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
