@@ -40,7 +40,7 @@
       });
     }))
     gemini-cli
-    discord
+    vesktop
     zoom-us
     opencode
     # # It is sometimes useful to fine-tune packages, for example, by applying
