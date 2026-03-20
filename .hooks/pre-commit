@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Pre-commit hook: check nix formatting with nixfmt
+
+nix_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.nix$')
+
+if [ -z "$nix_files" ]; then
+  exit 0
+fi
+
+if ! command -v nixfmt &>/dev/null; then
+  echo "nixfmt not found, running via nix-shell..."
+  formatter="nix-shell -p nixfmt --run"
+else
+  formatter=""
+fi
+
+unformatted=""
+for file in $nix_files; do
+  if [ -n "$formatter" ]; then
+    if ! nix-shell -p nixfmt --run "nixfmt --check $file" &>/dev/null; then
+      unformatted="$unformatted $file"
+    fi
+  else
+    if ! nixfmt --check "$file" &>/dev/null; then
+      unformatted="$unformatted $file"
+    fi
+  fi
+done
+
+if [ -n "$unformatted" ]; then
+  echo "The following nix files are not formatted:"
+  for file in $unformatted; do
+    echo "  $file"
+  done
+  echo ""
+  echo "Run: nixfmt$unformatted"
+  exit 1
+fi
