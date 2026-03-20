@@ -2,7 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, pkgs-unstable, self, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  pkgs-unstable,
+  self,
+  ...
+}:
 
 let
   userSettings = {
@@ -14,19 +21,18 @@ in
 {
   _module.args.userSettings = userSettings;
 
-  imports =
-    [
-      ./hardware-configuration.nix
-      inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
-      ../../modules/common/pipewire.nix
-      ../../modules/common/packages.nix
-      ../../modules/common/font.nix
-      ../../modules/common/lib.nix
-      #../../modules/de/cosmic.nix
-      ../../modules/de/gnome.nix
-      ../../modules/common/games.nix
-      inputs.home-manager.nixosModules.default
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    inputs.nixos-hardware.nixosModules.lenovo-legion-16arh7h-hybrid
+    ../../modules/common/pipewire.nix
+    ../../modules/common/packages.nix
+    ../../modules/common/font.nix
+    ../../modules/common/lib.nix
+    #../../modules/de/cosmic.nix
+    ../../modules/de/gnome.nix
+    ../../modules/common/games.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -55,8 +61,6 @@ in
     LC_TIME = "en_US.UTF-8";
   };
 
-
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -65,7 +69,10 @@ in
   users.users.${userSettings.username} = {
     isNormalUser = true;
     description = userSettings.username;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh; # configured in home-manager
     packages = with pkgs; [
     ];
@@ -87,7 +94,6 @@ in
 
   # Install firefox.
   programs.firefox.enable = true;
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -115,14 +121,17 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-  
+
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   boot.loader.systemd-boot.configurationLimit = 3;
 
   # Nixos
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {

@@ -1,4 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   jj-starship = inputs.jj-starship.packages.${pkgs.stdenv.hostPlatform.system}.default;

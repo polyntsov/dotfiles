@@ -17,16 +17,24 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, ... }@inputs:
-  let
-    system = "x86_64-linux";
-    pkgs-unstable = import nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in {
-    nixosConfigurations = {
-      elise = nixpkgs.lib.nixosSystem {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      nixos-hardware,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations = {
+        elise = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs;
@@ -38,6 +46,6 @@
             ./hosts/elise/configuration.nix
           ];
         };
+      };
     };
-  };
 }

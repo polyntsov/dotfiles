@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Enable the GNOME Desktop Environment.
@@ -70,117 +75,119 @@
   programs.dconf.enable = true;
   home-manager.sharedModules = [
     {
-      dconf.settings = let
-        wallpaper = "file://${../../media/pic/wall/nature.png}";
-      in {
-        "org/gnome/mutter" = {
-          dynamic-workspaces = false;
+      dconf.settings =
+        let
+          wallpaper = "file://${../../media/pic/wall/nature.png}";
+        in
+        {
+          "org/gnome/mutter" = {
+            dynamic-workspaces = false;
+          };
+
+          "org/gnome/desktop/wm/preferences" = {
+            num-workspaces = 4;
+          };
+
+          "org/gnome/shell/keybindings" = {
+            switch-to-application-1 = [ ];
+            switch-to-application-2 = [ ];
+            switch-to-application-3 = [ ];
+            switch-to-application-4 = [ ];
+          };
+
+          "org/gnome/desktop/wm/keybindings" = {
+            switch-to-workspace-1 = [ "<Super>1" ];
+            switch-to-workspace-2 = [ "<Super>2" ];
+            switch-to-workspace-3 = [ "<Super>3" ];
+            switch-to-workspace-4 = [ "<Super>4" ];
+
+            move-to-workspace-1 = [ "<Super><Shift>1" ];
+            move-to-workspace-2 = [ "<Super><Shift>2" ];
+            move-to-workspace-3 = [ "<Super><Shift>3" ];
+            move-to-workspace-4 = [ "<Super><Shift>4" ];
+
+            switch-applications = [ ];
+            switch-applications-backward = [ ];
+            switch-windows = [ "<Alt>Tab" ];
+            close = [ "<Super>q" ];
+          };
+
+          "org/gnome/desktop/input-sources" = {
+            xkb-options = [ "grp:alt_shift_toggle" ];
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            custom-keybindings = [
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+            ];
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+            binding = "<Super>Return";
+            command = "alacritty";
+            name = "Alacritty";
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+            binding = "<Super>t";
+            command = "Telegram";
+            name = "Telegram";
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+            binding = "<Super>d";
+            command = "discord";
+            name = "Discord";
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+            binding = "<Super>f";
+            command = "firefox";
+            name = "Firefox";
+          };
+
+          "org/gnome/desktop/interface" = {
+            color-scheme = "prefer-dark";
+            accent-color = "teal";
+          };
+
+          "org/gnome/desktop/background" = {
+            picture-uri = wallpaper;
+            picture-uri-dark = wallpaper;
+            primary-color = "#000000";
+            secondary-color = "#000000";
+          };
+
+          "org/gnome/desktop/screensaver" = {
+            picture-uri = wallpaper;
+            primary-color = "#000000";
+            secondary-color = "#000000";
+          };
+
+          "org/gnome/shell" = {
+            disable-user-extensions = false;
+
+            enabled-extensions = [
+              "appindicatorsupport@rgcjonas.gmail.com"
+              "p7-borders@prasannavl.com"
+              "dash-to-panel@jderose9.github.com"
+            ];
+          };
+
+          "org/gnome/shell/extensions/dash-to-panel" = {
+            panel-position = "BOTTOM";
+            panel-lengths = "{\"0\":100}";
+            panel-sizes = "{\"0\":40}";
+          };
+
+          "org/gnome/shell/extensions/p7-borders" = {
+            default-enabled = true;
+            default-active-color = "rgba(182, 184, 187, 0.8)";
+          };
         };
-
-        "org/gnome/desktop/wm/preferences" = {
-          num-workspaces = 4;
-        };
-
-        "org/gnome/shell/keybindings" = {
-          switch-to-application-1 = [ ];
-          switch-to-application-2 = [ ];
-          switch-to-application-3 = [ ];
-          switch-to-application-4 = [ ];
-        };
-
-        "org/gnome/desktop/wm/keybindings" = {
-          switch-to-workspace-1 = [ "<Super>1" ];
-          switch-to-workspace-2 = [ "<Super>2" ];
-          switch-to-workspace-3 = [ "<Super>3" ];
-          switch-to-workspace-4 = [ "<Super>4" ];
-
-          move-to-workspace-1 = [ "<Super><Shift>1" ];
-          move-to-workspace-2 = [ "<Super><Shift>2" ];
-          move-to-workspace-3 = [ "<Super><Shift>3" ];
-          move-to-workspace-4 = [ "<Super><Shift>4" ];
-
-          switch-applications = [ ];
-          switch-applications-backward = [ ];
-          switch-windows = [ "<Alt>Tab" ];
-          close = [ "<Super>q" ];
-        };
-
-        "org/gnome/desktop/input-sources" = {
-          xkb-options = [ "grp:alt_shift_toggle" ];
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
-          ];
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-          binding = "<Super>Return";
-          command = "alacritty";
-          name = "Alacritty";
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-          binding = "<Super>t";
-          command = "Telegram";
-          name = "Telegram";
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-          binding = "<Super>d";
-          command = "discord";
-          name = "Discord";
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-          binding = "<Super>f";
-          command = "firefox";
-          name = "Firefox";
-        };
-
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-          accent-color = "teal";
-        };
-
-        "org/gnome/desktop/background" = {
-          picture-uri = wallpaper;
-          picture-uri-dark = wallpaper;
-          primary-color = "#000000";
-          secondary-color = "#000000";
-        };
-
-        "org/gnome/desktop/screensaver" = {
-          picture-uri = wallpaper;
-          primary-color = "#000000";
-          secondary-color = "#000000";
-        };
-
-        "org/gnome/shell" = {
-          disable-user-extensions = false;
-
-          enabled-extensions = [
-            "appindicatorsupport@rgcjonas.gmail.com"
-            "p7-borders@prasannavl.com"
-            "dash-to-panel@jderose9.github.com"
-          ];
-        };
-
-        "org/gnome/shell/extensions/dash-to-panel" = {
-          panel-position = "BOTTOM";
-          panel-lengths = "{\"0\":100}";
-          panel-sizes = "{\"0\":40}";
-        };
-
-        "org/gnome/shell/extensions/p7-borders" = {
-          default-enabled = true;
-          default-active-color = "rgba(182, 184, 187, 0.8)";
-        };
-      };
     }
   ];
 }

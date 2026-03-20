@@ -1,4 +1,10 @@
-{ config, pkgs, lib, self, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 
 {
   programs.zsh = {
@@ -98,4 +104,3 @@
     starship
   ];
 }
-

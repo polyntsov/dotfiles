@@ -1,17 +1,23 @@
-{ config, pkgs, inputs, pkgs-unstable, userSettings, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  pkgs-unstable,
+  userSettings,
+  ...
+}:
 
 {
-  imports =
-    [
-      ../../modules/home-manager/alacritty.nix
-      ../../modules/home-manager/starship.nix
-      ../../modules/home-manager/zsh.nix
-      ../../modules/home-manager/tmux.nix
-      ../../modules/home-manager/git.nix
-      ../../modules/home-manager/jj.nix
-      ../../modules/home-manager/neovim/default.nix
-      ../../modules/home-manager/fastfetch.nix
-    ];
+  imports = [
+    ../../modules/home-manager/alacritty.nix
+    ../../modules/home-manager/starship.nix
+    ../../modules/home-manager/zsh.nix
+    ../../modules/home-manager/tmux.nix
+    ../../modules/home-manager/git.nix
+    ../../modules/home-manager/jj.nix
+    ../../modules/home-manager/neovim/default.nix
+    ../../modules/home-manager/fastfetch.nix
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = userSettings.username;
@@ -30,7 +36,7 @@
   home.packages = with pkgs; [
     (telegram-desktop.overrideAttrs (oldAttrs: {
       unwrapped = oldAttrs.unwrapped.overrideAttrs (oldUnwrapped: {
-        patches = (oldUnwrapped.patches or []) ++ [
+        patches = (oldUnwrapped.patches or [ ]) ++ [
           (fetchpatch {
             # https://github.com/nixos/nixpkgs/issues/497549
             url = "https://gist.github.com/half-duplex/d95e4fda535fb72ad0246ccfbe55cb23/raw/410dc924a317d391226c338ab75fcd1a9aaaf91b/tdesktop-minizip-include.patch";
@@ -97,4 +103,3 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
-

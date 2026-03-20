@@ -1,4 +1,10 @@
-{ config, pkgs, lib, userSettings, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  userSettings,
+  ...
+}:
 
 {
   # Steam
@@ -12,7 +18,6 @@
     protonup-ng
   ];
   environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATH =
-      "/home/${userSettings.username}/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATH = "/home/${userSettings.username}/.steam/root/compatibilitytools.d";
   };
 }
