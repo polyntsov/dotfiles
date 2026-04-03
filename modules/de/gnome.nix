@@ -39,6 +39,7 @@
     gnome-tweaks
     gnomeExtensions.appindicator
     gnomeExtensions.dash-to-panel
+    gnomeExtensions.tiling-shell
     (stdenv.mkDerivation rec {
       pname = "gnome-shell-extension-p7-borders";
       version = "758e78bac33b5bb3e60366f6de4b337eeffc2f98";
@@ -174,6 +175,7 @@
               "appindicatorsupport@rgcjonas.gmail.com"
               "p7-borders@prasannavl.com"
               "dash-to-panel@jderose9.github.com"
+              "tilingshell@ferrarodomenico.com"
             ];
           };
 
