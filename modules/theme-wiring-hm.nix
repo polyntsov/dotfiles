@@ -17,6 +17,7 @@ in
       theme = cfg.alacritty.theme;
       fontFamily = cfg.font.family;
       fontSize = cfg.font.size;
+      bg = cfg.bg or null;
     };
 
     my.tmux = {

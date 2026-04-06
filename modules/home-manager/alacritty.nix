@@ -26,6 +26,12 @@ in
       type = lib.types.number;
       description = "Font size for the terminal";
     };
+
+    bg = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "Terminal background color override. If null, uses the theme file's background.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -36,6 +42,9 @@ in
     programs.alacritty.settings = {
       colors = {
         draw_bold_text_with_bright_colors = true;
+      }
+      // lib.optionalAttrs (cfg.bg != null) {
+        primary.background = cfg.bg;
       };
 
       scrolling = {

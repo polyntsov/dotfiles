@@ -12,6 +12,8 @@ let
     vim.opt.termguicolors = true
     vim.opt.background = "${cfg.background}"
     vim.cmd.colorscheme("${cfg.colorscheme}")
+    vim.api.nvim_set_hl(0, "Normal", { bg = "None" })
+    vim.api.nvim_set_hl(0, "NormalNC", { bg = "None" })
     vim.api.nvim_set_hl(0, "@lsp.type.parameter", { fg = "None" })
   '';
 in
