@@ -17,6 +17,8 @@ let
     name = "Michael Polyntsov";
     email = "arno9148@gmail.com";
   };
+
+  theme = import ../../themes/papercolor.nix;
 in
 {
   _module.args.userSettings = userSettings;
@@ -35,12 +37,12 @@ in
     inputs.home-manager.nixosModules.default
   ];
 
-  my.theme = import ../../themes/papercolor.nix;
+  my.theme = theme;
 
   # -- Theme: system-level options --
   my.font = {
     enable = true;
-    package = config.my.theme.font.package;
+    package = theme.font.package;
   };
 
   # Bootloader.
@@ -95,6 +97,7 @@ in
       inherit self;
       inherit pkgs-unstable;
       inherit userSettings;
+      inherit theme;
     };
     users = {
       "${userSettings.username}" = import ./home.nix;

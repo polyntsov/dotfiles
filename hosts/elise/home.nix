@@ -4,6 +4,7 @@
   inputs,
   pkgs-unstable,
   userSettings,
+  theme,
   ...
 }:
 
@@ -23,7 +24,7 @@
   # manage.
 
   # -- Theme: home-manager options --
-  my.theme = import ../../themes/papercolor.nix;
+  my.theme = theme;
 
   home.username = userSettings.username;
   home.homeDirectory = "/home/${userSettings.username}";
