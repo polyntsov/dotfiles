@@ -10,6 +10,8 @@ in
   };
 
   config = {
+    my.zsh.animation = cfg.animation;
+
     my.alacritty = {
       enable = true;
       theme = cfg.alacritty.theme;

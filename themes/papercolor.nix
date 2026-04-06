@@ -4,6 +4,8 @@
 
   wallpaper = ../media/pic/wall/nature.png;
 
+  animation = ../media/animations;
+
   font = {
     family = "Pixel Code";
     package = "pixel-code";
