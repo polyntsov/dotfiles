@@ -114,6 +114,7 @@ in
           {
             "org/gnome/mutter" = {
               dynamic-workspaces = false;
+              experimental-features = [ "scale-monitor-framebuffer" ];
             };
 
             "org/gnome/desktop/wm/preferences" = {
