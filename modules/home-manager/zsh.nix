@@ -96,7 +96,7 @@ in
         source ${pkgs.fzf}/share/fzf/completion.zsh
 
         # FZF defaults matching your old setup
-        export IGNORE_DIRS='--ignore-dir .local --ignore-dir .git --ignore-dir .mozilla --ignore-dir .thunderbird --ignore-dir .dotfiles --ignore-dir .cache'
+        export IGNORE_DIRS='--ignore-dir .local --ignore-dir .git --ignore-dir .mozilla --ignore-dir .thunderbird --ignore-dir .dotfiles --ignore-dir .cache --ignore-dir .jj'
         export FZF_CTRL_T_COMMAND="ag --hidden $IGNORE_DIRS -g """
         export FZF_ALT_C_COMMAND="ag --hidden $IGNORE_DIRS -g """
 
