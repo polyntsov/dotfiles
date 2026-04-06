@@ -58,6 +58,7 @@ in
     home.packages = with pkgs; [
       clang-tools
       pyright
+      ruff
       rust-analyzer
     ];
   };
