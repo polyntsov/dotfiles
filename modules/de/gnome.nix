@@ -5,191 +5,223 @@
   ...
 }:
 
+let
+  cfg = config.my.gnome;
+in
 {
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.gnome.gnome-keyring.enable = true;
+  options.my.gnome = {
+    enable = lib.mkEnableOption "GNOME desktop with theme support";
 
-  # Disable the X11 windowing system.
-  services.xserver.enable = false;
+    wallpaper = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to wallpaper image";
+    };
 
-  # Configure keymap in X11 (and for GNOME)
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    colorScheme = lib.mkOption {
+      type = lib.types.str;
+      default = "prefer-dark";
+      description = "GNOME color scheme (prefer-dark, prefer-light, default)";
+    };
+
+    accentColor = lib.mkOption {
+      type = lib.types.str;
+      default = "teal";
+      description = "GNOME accent color";
+    };
+
+    borderColor = lib.mkOption {
+      type = lib.types.str;
+      default = "rgba(182, 184, 187, 0.8)";
+      description = "p7-borders active window border color";
+    };
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      # 50.alpha of gsd fixes resuspends after wakeups
-      gnome-settings-daemon = prev.gnome-settings-daemon.overrideAttrs (old: {
-        src = prev.fetchgit {
-          url = "https://gitlab.gnome.org/GNOME/gnome-settings-daemon.git";
-          rev = "50.alpha";
-          sha256 = "151b9sdb2f4045f25ddgv896fxzwfmidy9vps03cqx62ciwglrjn";
-          fetchSubmodules = true;
+  config = lib.mkIf cfg.enable {
+    # Enable the GNOME Desktop Environment.
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
+    services.gnome.gnome-keyring.enable = true;
+
+    # Disable the X11 windowing system.
+    services.xserver.enable = false;
+
+    # Configure keymap in X11 (and for GNOME)
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "";
+    };
+
+    nixpkgs.overlays = [
+      (final: prev: {
+        # 50.alpha of gsd fixes resuspends after wakeups
+        gnome-settings-daemon = prev.gnome-settings-daemon.overrideAttrs (old: {
+          src = prev.fetchgit {
+            url = "https://gitlab.gnome.org/GNOME/gnome-settings-daemon.git";
+            rev = "50.alpha";
+            sha256 = "151b9sdb2f4045f25ddgv896fxzwfmidy9vps03cqx62ciwglrjn";
+            fetchSubmodules = true;
+          };
+          version = "50.alpha";
+        });
+      })
+    ];
+
+    environment.systemPackages = with pkgs; [
+      gnome-tweaks
+      gnomeExtensions.appindicator
+      gnomeExtensions.dash-to-panel
+      gnomeExtensions.tiling-shell
+      (stdenv.mkDerivation rec {
+        pname = "gnome-shell-extension-p7-borders";
+        version = "758e78bac33b5bb3e60366f6de4b337eeffc2f98";
+
+        src = fetchFromGitHub {
+          owner = "prasannavl";
+          repo = "p7-borders-shell-extension";
+          rev = version;
+          sha256 = "0k0yjzspvrb333fffblwr66xb7kkqqmvjjzh9znzrzhlivl4br78";
         };
-        version = "50.alpha";
-      });
-    })
-  ];
 
-  environment.systemPackages = with pkgs; [
-    gnome-tweaks
-    gnomeExtensions.appindicator
-    gnomeExtensions.dash-to-panel
-    gnomeExtensions.tiling-shell
-    (stdenv.mkDerivation rec {
-      pname = "gnome-shell-extension-p7-borders";
-      version = "758e78bac33b5bb3e60366f6de4b337eeffc2f98";
+        nativeBuildInputs = [ glib ];
 
-      src = fetchFromGitHub {
-        owner = "prasannavl";
-        repo = "p7-borders-shell-extension";
-        rev = version;
-        sha256 = "0k0yjzspvrb333fffblwr66xb7kkqqmvjjzh9znzrzhlivl4br78";
-      };
+        buildPhase = ''
+          glib-compile-schemas schemas
+        '';
 
-      nativeBuildInputs = [ glib ];
+        installPhase = ''
+          mkdir -p $out/share/gnome-shell/extensions/p7-borders@prasannavl.com
+          cp -r * $out/share/gnome-shell/extensions/p7-borders@prasannavl.com
+        '';
+      })
+      wl-clipboard
+    ];
+    environment.gnome.excludePackages = with pkgs; [
+      gnome-contacts
+      gnome-initial-setup
+      gnome-tour
+      gnome-user-docs
+      epiphany # web browser
+      yelp # Help view
+    ];
 
-      buildPhase = ''
-        glib-compile-schemas schemas
-      '';
+    programs.dconf.enable = true;
+    home-manager.sharedModules = [
+      {
+        dconf.settings =
+          let
+            wallpaper = "file://${cfg.wallpaper}";
+          in
+          {
+            "org/gnome/mutter" = {
+              dynamic-workspaces = false;
+            };
 
-      installPhase = ''
-        mkdir -p $out/share/gnome-shell/extensions/p7-borders@prasannavl.com
-        cp -r * $out/share/gnome-shell/extensions/p7-borders@prasannavl.com
-      '';
-    })
-    wl-clipboard
-  ];
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-contacts
-    gnome-initial-setup
-    gnome-tour
-    gnome-user-docs
-    epiphany # web browser
-    yelp # Help view
-  ];
+            "org/gnome/desktop/wm/preferences" = {
+              num-workspaces = 4;
+            };
 
-  programs.dconf.enable = true;
-  home-manager.sharedModules = [
-    {
-      dconf.settings =
-        let
-          wallpaper = "file://${../../media/pic/wall/nature.png}";
-        in
-        {
-          "org/gnome/mutter" = {
-            dynamic-workspaces = false;
+            "org/gnome/shell/keybindings" = {
+              switch-to-application-1 = [ ];
+              switch-to-application-2 = [ ];
+              switch-to-application-3 = [ ];
+              switch-to-application-4 = [ ];
+            };
+
+            "org/gnome/desktop/wm/keybindings" = {
+              switch-to-workspace-1 = [ "<Super>1" ];
+              switch-to-workspace-2 = [ "<Super>2" ];
+              switch-to-workspace-3 = [ "<Super>3" ];
+              switch-to-workspace-4 = [ "<Super>4" ];
+
+              move-to-workspace-1 = [ "<Super><Shift>1" ];
+              move-to-workspace-2 = [ "<Super><Shift>2" ];
+              move-to-workspace-3 = [ "<Super><Shift>3" ];
+              move-to-workspace-4 = [ "<Super><Shift>4" ];
+
+              switch-applications = [ ];
+              switch-applications-backward = [ ];
+              switch-windows = [ "<Alt>Tab" ];
+              close = [ "<Super>q" ];
+            };
+
+            "org/gnome/desktop/input-sources" = {
+              xkb-options = [ "grp:alt_shift_toggle" ];
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys" = {
+              custom-keybindings = [
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+              ];
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+              binding = "<Super>Return";
+              command = "alacritty";
+              name = "Alacritty";
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+              binding = "<Super>t";
+              command = "Telegram";
+              name = "Telegram";
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+              binding = "<Super>d";
+              command = "discord";
+              name = "Discord";
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+              binding = "<Super>f";
+              command = "firefox";
+              name = "Firefox";
+            };
+
+            "org/gnome/desktop/interface" = {
+              color-scheme = cfg.colorScheme;
+              accent-color = cfg.accentColor;
+            };
+
+            "org/gnome/desktop/background" = {
+              picture-uri = wallpaper;
+              picture-uri-dark = wallpaper;
+              primary-color = "#000000";
+              secondary-color = "#000000";
+            };
+
+            "org/gnome/desktop/screensaver" = {
+              picture-uri = wallpaper;
+              primary-color = "#000000";
+              secondary-color = "#000000";
+            };
+
+            "org/gnome/shell" = {
+              disable-user-extensions = false;
+
+              enabled-extensions = [
+                "appindicatorsupport@rgcjonas.gmail.com"
+                "p7-borders@prasannavl.com"
+                "dash-to-panel@jderose9.github.com"
+                "tilingshell@ferrarodomenico.com"
+              ];
+            };
+
+            "org/gnome/shell/extensions/dash-to-panel" = {
+              panel-position = "BOTTOM";
+              panel-lengths = "{\"0\":100}";
+              panel-sizes = "{\"0\":40}";
+            };
+
+            "org/gnome/shell/extensions/p7-borders" = {
+              default-enabled = true;
+              default-active-color = cfg.borderColor;
+            };
           };
-
-          "org/gnome/desktop/wm/preferences" = {
-            num-workspaces = 4;
-          };
-
-          "org/gnome/shell/keybindings" = {
-            switch-to-application-1 = [ ];
-            switch-to-application-2 = [ ];
-            switch-to-application-3 = [ ];
-            switch-to-application-4 = [ ];
-          };
-
-          "org/gnome/desktop/wm/keybindings" = {
-            switch-to-workspace-1 = [ "<Super>1" ];
-            switch-to-workspace-2 = [ "<Super>2" ];
-            switch-to-workspace-3 = [ "<Super>3" ];
-            switch-to-workspace-4 = [ "<Super>4" ];
-
-            move-to-workspace-1 = [ "<Super><Shift>1" ];
-            move-to-workspace-2 = [ "<Super><Shift>2" ];
-            move-to-workspace-3 = [ "<Super><Shift>3" ];
-            move-to-workspace-4 = [ "<Super><Shift>4" ];
-
-            switch-applications = [ ];
-            switch-applications-backward = [ ];
-            switch-windows = [ "<Alt>Tab" ];
-            close = [ "<Super>q" ];
-          };
-
-          "org/gnome/desktop/input-sources" = {
-            xkb-options = [ "grp:alt_shift_toggle" ];
-          };
-
-          "org/gnome/settings-daemon/plugins/media-keys" = {
-            custom-keybindings = [
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
-            ];
-          };
-
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-            binding = "<Super>Return";
-            command = "alacritty";
-            name = "Alacritty";
-          };
-
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-            binding = "<Super>t";
-            command = "Telegram";
-            name = "Telegram";
-          };
-
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-            binding = "<Super>d";
-            command = "discord";
-            name = "Discord";
-          };
-
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-            binding = "<Super>f";
-            command = "firefox";
-            name = "Firefox";
-          };
-
-          "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-            accent-color = "teal";
-          };
-
-          "org/gnome/desktop/background" = {
-            picture-uri = wallpaper;
-            picture-uri-dark = wallpaper;
-            primary-color = "#000000";
-            secondary-color = "#000000";
-          };
-
-          "org/gnome/desktop/screensaver" = {
-            picture-uri = wallpaper;
-            primary-color = "#000000";
-            secondary-color = "#000000";
-          };
-
-          "org/gnome/shell" = {
-            disable-user-extensions = false;
-
-            enabled-extensions = [
-              "appindicatorsupport@rgcjonas.gmail.com"
-              "p7-borders@prasannavl.com"
-              "dash-to-panel@jderose9.github.com"
-              "tilingshell@ferrarodomenico.com"
-            ];
-          };
-
-          "org/gnome/shell/extensions/dash-to-panel" = {
-            panel-position = "BOTTOM";
-            panel-lengths = "{\"0\":100}";
-            panel-sizes = "{\"0\":40}";
-          };
-
-          "org/gnome/shell/extensions/p7-borders" = {
-            default-enabled = true;
-            default-active-color = "rgba(182, 184, 187, 0.8)";
-          };
-        };
-    }
-  ];
+      }
+    ];
+  };
 }

@@ -1,78 +1,117 @@
-{ config, pkgs, ... }:
-
 {
-  programs.tmux = {
-    enable = true;
-    mouse = true;
-    keyMode = "vi";
-    prefix = "C-a";
-    escapeTime = 0;
-    historyLimit = 50000;
-    shell = "${pkgs.zsh}/bin/zsh";
-    terminal = "alacritty";
-    extraConfig = ''
-      # split panes using | and -
-      bind | split-window -h
-      bind - split-window -v
-      unbind '"'
-      unbind %
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-      # reload config file
-      bind r source-file ~/.tmux.conf
+let
+  cfg = config.my.tmux;
+in
+{
+  options.my.tmux = {
+    enable = lib.mkEnableOption "tmux with theme support";
 
-      # switching panes
-      bind -r Tab select-pane -t :.+
-      bind -r h select-pane -L
-      bind -r j select-pane -D
-      bind -r k select-pane -U
-      bind -r l select-pane -R
+    bg = lib.mkOption {
+      type = lib.types.str;
+      description = "Background color";
+    };
 
-      # resize panes
-      bind -r H resize-pane -L 5
-      bind -r J resize-pane -D 5
-      bind -r K resize-pane -U 5
-      bind -r L resize-pane -R 5
+    fg = lib.mkOption {
+      type = lib.types.str;
+      description = "Foreground color";
+    };
 
-      # status line - conditional load (won't work perfectly in Nix, but closest)
-      if-shell "test -f ~/.config/tmux.statusline" "source ~/.config/tmux.statusline"
+    accent = lib.mkOption {
+      type = lib.types.str;
+      description = "Accent color";
+    };
 
-      # terminal overrides
-      #set -as terminal-features ",*:RGB"
-      #set -ag terminal-overrides ",xterm-256color:RGB"
+    accentAlt = lib.mkOption {
+      type = lib.types.str;
+      description = "Alternative accent color (hostname bg)";
+    };
 
-      # copy mode vi bindings for Wayland
-      set-option -s set-clipboard off
-      bind P paste-buffer
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'wl-copy'
-      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'wl-copy'
+    inactive = lib.mkOption {
+      type = lib.types.str;
+      description = "Inactive text color";
+    };
+  };
 
-      # Popups
-      bind C-p display-popup -d "#{pane_current_path}" -E "python3"
-      bind C-t display-popup -d "#{pane_current_path}" -E "zsh"
-      bind C-g display-popup -d "#{pane_current_path}" -w 80% -h 80% -E "lazygit"
+  config = lib.mkIf cfg.enable {
+    programs.tmux = {
+      enable = true;
+      mouse = true;
+      keyMode = "vi";
+      prefix = "C-a";
+      escapeTime = 0;
+      historyLimit = 50000;
+      shell = "${pkgs.zsh}/bin/zsh";
+      terminal = "alacritty";
+      extraConfig = ''
+        # split panes using | and -
+        bind | split-window -h
+        bind - split-window -v
+        unbind '"'
+        unbind %
 
-      # Colors and status line
-      set -g mode-style "fg=#0c0c0c,bg=#b6b8bb"
-      set -g message-style "fg=#0c0c0c,bg=#b6b8bb"
-      set -g message-command-style "fg=#0c0c0c,bg=#b6b8bb"
-      set -g pane-border-style "fg=#b6b8bb"
-      set -g pane-active-border-style "fg=#78a9ff"
-      set -g status "on"
-      set -g status-justify "left"
-      set -g status-style "fg=#b6b8bb,bg=#0c0c0c"
-      set -g status-left-length "100"
-      set -g status-right-length "100"
-      set -g status-left-style NONE
-      set -g status-right-style NONE
-      set -g status-left "#[fg=#78a9ff,nobold,nounderscore,noitalics]"
-      set -g status-right "#[fg=#0c0c0c,bg=#0c0c0c,nobold,nounderscore,noitalics]#[fg=#78a9ff,bg=#0c0c0c] #{prefix_highlight} #[fg=#b6b8bb,bg=#0c0c0c,nobold,nounderscore,noitalics] #[fg=#0c0c0c,bg=#b6b8bb] %Y-%m-%d   %I:%M %p #[fg=#78a9ff,bg=#b6b8bb,nobold,nounderscore,noitalics] #[fg=#0c0c0c,bg=#2190A4,bold] #h "
-      setw -g window-status-activity-style "underscore,fg=#7b7c7e,bg=#0c0c0c"
-      setw -g window-status-separator ""
-      setw -g window-status-style "NONE,fg=#7b7c7e,bg=#0c0c0c"
-      setw -g window-status-format "#[fg=#0c0c0c,bg=#0c0c0c,nobold,nounderscore,noitalics]#[default] #I #W #F #[fg=#0c0c0c,bg=#0c0c0c,nobold,nounderscore,noitalics]"
-      setw -g window-status-current-format "#[fg=#0c0c0c,bg=#b6b8bb,nobold,nounderscore,noitalics]#[fg=#0c0c0c,bg=#b6b8bb,bold] #I #W #F #[fg=#b6b8bb,bg=#0c0c0c,nobold,nounderscore,noitalics]"
-    '';
+        # reload config file
+        bind r source-file ~/.tmux.conf
+
+        # switching panes
+        bind -r Tab select-pane -t :.+
+        bind -r h select-pane -L
+        bind -r j select-pane -D
+        bind -r k select-pane -U
+        bind -r l select-pane -R
+
+        # resize panes
+        bind -r H resize-pane -L 5
+        bind -r J resize-pane -D 5
+        bind -r K resize-pane -U 5
+        bind -r L resize-pane -R 5
+
+        # status line - conditional load (won't work perfectly in Nix, but closest)
+        if-shell "test -f ~/.config/tmux.statusline" "source ~/.config/tmux.statusline"
+
+        # terminal overrides
+        #set -as terminal-features ",*:RGB"
+        #set -ag terminal-overrides ",xterm-256color:RGB"
+
+        # copy mode vi bindings for Wayland
+        set-option -s set-clipboard off
+        bind P paste-buffer
+        bind-key -T copy-mode-vi v send-keys -X begin-selection
+        bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+        bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'wl-copy'
+        bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'wl-copy'
+
+        # Popups
+        bind C-p display-popup -d "#{pane_current_path}" -E "python3"
+        bind C-t display-popup -d "#{pane_current_path}" -E "zsh"
+        bind C-g display-popup -d "#{pane_current_path}" -w 80% -h 80% -E "lazygit"
+
+        # Colors and status line
+        set -g mode-style "fg=${cfg.bg},bg=${cfg.fg}"
+        set -g message-style "fg=${cfg.bg},bg=${cfg.fg}"
+        set -g message-command-style "fg=${cfg.bg},bg=${cfg.fg}"
+        set -g pane-border-style "fg=${cfg.fg}"
+        set -g pane-active-border-style "fg=${cfg.accent}"
+        set -g status "on"
+        set -g status-justify "left"
+        set -g status-style "fg=${cfg.fg},bg=${cfg.bg}"
+        set -g status-left-length "100"
+        set -g status-right-length "100"
+        set -g status-left-style NONE
+        set -g status-right-style NONE
+        set -g status-left "#[fg=${cfg.accent},nobold,nounderscore,noitalics]"
+        set -g status-right "#[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]#[fg=${cfg.accent},bg=${cfg.bg}] #{prefix_highlight} #[fg=${cfg.fg},bg=${cfg.bg},nobold,nounderscore,noitalics] #[fg=${cfg.bg},bg=${cfg.fg}] %Y-%m-%d   %I:%M %p #[fg=${cfg.accent},bg=${cfg.fg},nobold,nounderscore,noitalics] #[fg=${cfg.bg},bg=${cfg.accentAlt},bold] #h "
+        setw -g window-status-activity-style "underscore,fg=${cfg.inactive},bg=${cfg.bg}"
+        setw -g window-status-separator ""
+        setw -g window-status-style "NONE,fg=${cfg.inactive},bg=${cfg.bg}"
+        setw -g window-status-format "#[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]#[default] #I #W #F #[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]"
+        setw -g window-status-current-format "#[fg=${cfg.bg},bg=${cfg.fg},nobold,nounderscore,noitalics]#[fg=${cfg.bg},bg=${cfg.fg},bold] #I #W #F #[fg=${cfg.fg},bg=${cfg.bg},nobold,nounderscore,noitalics]"
+      '';
+    };
   };
 }

@@ -1,50 +1,79 @@
-{ config, pkgs, ... }:
-
 {
-  programs.alacritty.enable = true;
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-  programs.alacritty.theme = "papercolor_dark";
+let
+  cfg = config.my.alacritty;
+in
+{
+  options.my.alacritty = {
+    enable = lib.mkEnableOption "Alacritty terminal with theme support";
 
-  programs.alacritty.settings = {
-    colors = {
-      draw_bold_text_with_bright_colors = true;
+    theme = lib.mkOption {
+      type = lib.types.str;
+      description = "Alacritty color theme name";
     };
 
-    scrolling = {
-      history = 10000;
-      multiplier = 3;
+    fontFamily = lib.mkOption {
+      type = lib.types.str;
+      description = "Font family for the terminal";
     };
 
-    selection = {
-      save_to_clipboard = false;
+    fontSize = lib.mkOption {
+      type = lib.types.number;
+      description = "Font size for the terminal";
     };
+  };
 
-    window = {
-      opacity = 1;
-      decorations = "None";
+  config = lib.mkIf cfg.enable {
+    programs.alacritty.enable = true;
 
-      dimensions = {
-        columns = 110;
-        lines = 32;
+    programs.alacritty.theme = cfg.theme;
+
+    programs.alacritty.settings = {
+      colors = {
+        draw_bold_text_with_bright_colors = true;
       };
 
-      class = {
-        general = "Alacritty";
-        instance = "Alacritty";
+      scrolling = {
+        history = 10000;
+        multiplier = 3;
       };
 
-      padding = {
-        x = 5;
-        y = 5;
+      selection = {
+        save_to_clipboard = false;
       };
-    };
 
-    font = {
-      normal = {
-        family = "Pixel Code";
-        style = "Regular";
+      window = {
+        opacity = 1;
+        decorations = "None";
+
+        dimensions = {
+          columns = 110;
+          lines = 32;
+        };
+
+        class = {
+          general = "Alacritty";
+          instance = "Alacritty";
+        };
+
+        padding = {
+          x = 5;
+          y = 5;
+        };
       };
-      size = 10;
+
+      font = {
+        normal = {
+          family = cfg.fontFamily;
+          style = "Regular";
+        };
+        size = cfg.fontSize;
+      };
     };
   };
 }
