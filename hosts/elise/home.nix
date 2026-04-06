@@ -4,7 +4,6 @@
   inputs,
   pkgs-unstable,
   userSettings,
-  theme,
   ...
 }:
 
@@ -18,34 +17,13 @@
     ../../modules/home-manager/jj.nix
     ../../modules/home-manager/neovim/default.nix
     ../../modules/home-manager/fastfetch.nix
+    ../../modules/theme-wiring-hm.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
 
   # -- Theme: home-manager options --
-  my.alacritty = {
-    enable = true;
-    theme = theme.alacritty.theme;
-    fontFamily = theme.font.family;
-    fontSize = theme.font.size;
-  };
-
-  my.tmux = {
-    enable = true;
-    inherit (theme.tmux)
-      bg
-      fg
-      accent
-      accentAlt
-      inactive
-      ;
-  };
-
-  my.neovim = {
-    enable = true;
-    colorscheme = theme.neovim.colorscheme;
-    background = theme.neovim.background;
-  };
+  my.theme = import ../../themes/papercolor.nix;
 
   home.username = userSettings.username;
   home.homeDirectory = "/home/${userSettings.username}";

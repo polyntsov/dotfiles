@@ -17,12 +17,9 @@ let
     name = "Michael Polyntsov";
     email = "arno9148@gmail.com";
   };
-
-  theme = import ../../themes/papercolor.nix;
 in
 {
   _module.args.userSettings = userSettings;
-  _module.args.theme = theme;
 
   imports = [
     ./hardware-configuration.nix
@@ -34,21 +31,16 @@ in
     #../../modules/de/cosmic.nix
     ../../modules/de/gnome.nix
     ../../modules/common/games.nix
+    ../../modules/theme-wiring-system.nix
     inputs.home-manager.nixosModules.default
   ];
+
+  my.theme = import ../../themes/papercolor.nix;
 
   # -- Theme: system-level options --
   my.font = {
     enable = true;
-    package = theme.font.package;
-  };
-
-  my.gnome = {
-    enable = true;
-    wallpaper = theme.wallpaper;
-    colorScheme = theme.gnome.colorScheme;
-    accentColor = theme.gnome.accentColor;
-    borderColor = theme.gnome.borderColor;
+    package = config.my.theme.font.package;
   };
 
   # Bootloader.
@@ -103,7 +95,6 @@ in
       inherit self;
       inherit pkgs-unstable;
       inherit userSettings;
-      inherit theme;
     };
     users = {
       "${userSettings.username}" = import ./home.nix;
