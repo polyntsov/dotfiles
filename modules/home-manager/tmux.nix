@@ -109,8 +109,8 @@ in
         setw -g window-status-activity-style "underscore,fg=${cfg.inactive},bg=${cfg.bg}"
         setw -g window-status-separator ""
         setw -g window-status-style "NONE,fg=${cfg.inactive},bg=${cfg.bg}"
-        setw -g window-status-format "#[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]#[default] #I #W #F #[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]"
-        setw -g window-status-current-format "#[fg=${cfg.bg},bg=${cfg.fg},nobold,nounderscore,noitalics]#[fg=${cfg.bg},bg=${cfg.fg},bold] #I #W #F #[fg=${cfg.fg},bg=${cfg.bg},nobold,nounderscore,noitalics]"
+        setw -g window-status-format "#[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]#[default] #I #W #[fg=${cfg.bg},bg=${cfg.bg},nobold,nounderscore,noitalics]"
+        setw -g window-status-current-format "#[fg=${cfg.bg},bg=${cfg.fg},nobold,nounderscore,noitalics]#[fg=${cfg.bg},bg=${cfg.fg},bold] #I #W #[fg=${cfg.fg},bg=${cfg.bg},nobold,nounderscore,noitalics]"
       '';
     };
   };
