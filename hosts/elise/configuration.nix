@@ -162,4 +162,27 @@ in
   virtualisation.docker = {
     enable = true;
   };
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+
+    settings = {
+      General = {
+        JustWorksRepairing = "always";
+        FastConnectable = true;
+        UserspaceHID = true;
+      };
+      Input = {
+        ClassicBondedOnly = false;
+      };
+    };
+  };
+
+  boot.kernelModules = [ "hid-playstation" ];
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=0
+  '';
+
+  hardware.steam-hardware.enable = true;
 }
