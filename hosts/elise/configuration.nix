@@ -149,6 +149,12 @@ in
   ];
   nixpkgs.config.allowUnfree = true;
 
+  # Cuda
+  nix.settings = {
+    substituters = [ "https://cache.nixos-cuda.org" ];
+    trusted-public-keys = [ "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" ];
+  };
+
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
   #  version = "580.82.09";
   #  sha256_64bit = "sha256-Puz4MtouFeDgmsNMKdLHoDgDGC+QRXh6NVysvltWlbc=";
