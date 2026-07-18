@@ -138,7 +138,7 @@ in
   system.stateVersion = "25.11"; # Did you read the comment?
 
   # Kernel
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   boot.loader.systemd-boot.configurationLimit = 3;
 
