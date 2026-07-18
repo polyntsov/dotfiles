@@ -73,13 +73,13 @@ in
       gnomeExtensions.tiling-shell
       (stdenv.mkDerivation rec {
         pname = "gnome-shell-extension-p7-borders";
-        version = "758e78bac33b5bb3e60366f6de4b337eeffc2f98";
+        version = "fb0c61db64a63e865f417a6117d26896d07454c8";
 
         src = fetchFromGitHub {
           owner = "prasannavl";
           repo = "p7-borders-shell-extension";
           rev = version;
-          sha256 = "0k0yjzspvrb333fffblwr66xb7kkqqmvjjzh9znzrzhlivl4br78";
+          sha256 = "ZhOKI7UhUj40kOQztAss0RVpflDpqIiiA/pWKGf2g+Y=";
         };
 
         nativeBuildInputs = [ glib ];
@@ -220,6 +220,12 @@ in
             "org/gnome/shell/extensions/p7-borders" = {
               default-enabled = true;
               default-active-color = cfg.borderColor;
+              # p7-borders resets all keys to schema defaults (wiping
+              # default-active-color back to 'auto', i.e. the accent color)
+              # whenever config-version < its internal currentRevision.
+              # Pin it to the extension's currentRevision so it never resets
+              # our override. Bump this when bumping the extension rev.
+              config-version = 10;
             };
           };
       }
