@@ -179,6 +179,13 @@ in
     };
   };
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client"; # required for exit-node use
+  };
+
+  networking.firewall.checkReversePath = "loose";
+
   boot.kernelModules = [ "hid-playstation" ];
   boot.extraModprobeConfig = ''
     options btusb enable_autosuspend=0
